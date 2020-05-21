@@ -50,6 +50,8 @@ namespace AmazonPaySample.Controllers
             return View(model);
         }
 
+        private const decimal Amount = 999;
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Purchase(string amazonCheckoutSessionId)
@@ -58,8 +60,8 @@ namespace AmazonPaySample.Controllers
 
             var checkoutSession = _amazonPayHelper.UpdateCheckoutSession(
                 checkoutSessionId: amazonCheckoutSessionId,
-                merchantReferenceId: "COMMERBLE-" + amazonCheckoutSessionId,
-                amount: 999,
+                merchantReferenceId: "SAMPLE-" + amazonCheckoutSessionId,
+                amount: Amount,
                 checkoutResultReturnUrl: returnUrl);
 
             // OK
@@ -76,6 +78,14 @@ namespace AmazonPaySample.Controllers
             };
 
             return View("Confirm", model);
+        }
+
+        public IActionResult Complete(string amazonCheckoutSessionId)
+        {
+            // not impliment CompleteCheckoutSession!!
+            var result = _amazonPayHelper.CompleteCheckoutSession(amazonCheckoutSessionId, Amount);
+
+            return View();
         }
     }
 }

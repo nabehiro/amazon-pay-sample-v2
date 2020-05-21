@@ -1,4 +1,5 @@
 ﻿using Amazon.Pay.API;
+using Amazon.Pay.API.Types;
 using Amazon.Pay.API.WebStore;
 using Amazon.Pay.API.WebStore.CheckoutSession;
 using Amazon.Pay.API.WebStore.Types;
@@ -89,6 +90,12 @@ namespace AmazonPaySample.Models
 
             var client = new WebStoreClient(_config);
             return client.UpdateCheckoutSession(checkoutSessionId, request);
+        }
+
+        public CheckoutSessionResponse CompleteCheckoutSession(string checkoutSessionId,
+            decimal amount)
+        {
+            throw new NotImplementedException("WebStoreClient has no CompleteCheckoutSession method!");
         }
     }
 }
