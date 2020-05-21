@@ -1,0 +1,41 @@
+﻿@model FrontConfirmViewModel
+@{
+    ViewData["Title"] = "Confirm";
+
+    var checkoutSessionJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented);
+}
+
+<h1>Confirm</h1>
+
+<form asp-action="Purchase" method="post">
+    <input type="text" name="amazonCheckoutSessionId" readonly value="@(Model.CheckoutSession.CheckoutSessionId)" style="width:500px"/>
+    <br/>
+    <button type="submit">Purchase</button>
+</form>
+
+<hr/>
+
+<button id="change-address" type="button">change address</button>
+<button id="change-payment" type="button">change payment</button>
+
+<hr/>
+
+<h2>CheckoutSession</h2>
+<pre>@checkoutSessionJson</pre>
+
+@section Scripts {
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script>
+    amazon.Pay.bindChangeAction('#change-address', {
+        amazonCheckoutSessionId: '@(Model.CheckoutSession.CheckoutSessionId)',
+        changeAction: 'changeAddress'
+    });
+
+    amazon.Pay.bindChangeAction('#change-payment', {
+        amazonCheckoutSessionId: '@(Model.CheckoutSession.CheckoutSessionId)',
+        changeAction: 'changePayment'
+    });
+</script>
+
+}
+

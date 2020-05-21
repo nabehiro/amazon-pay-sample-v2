@@ -1,0 +1,33 @@
+﻿@model FrontCartViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<div>
+    <h1>Cart</h1>
+
+    <div id="AmazonPayButton"></div>
+</div>
+
+@section Scripts {
+    <script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        amazon.Pay.renderButton('#AmazonPayButton', {
+            // set checkout environment
+            merchantId: '@(Model.MerchantId)',
+            ledgerCurrency: 'JPY',
+            sandbox: true,
+            // customize the buyer experience
+            checkoutLanguage: 'ja_JP',
+            productType: 'PayAndShip',
+            placement: 'Cart',
+            // configure Create Checkout Session request
+            createCheckoutSessionConfig: {
+                payloadJSON: '@Html.Raw(Model.Payload)', // payload generated in step 2
+                signature: '@Html.Raw(Model.Signature)', // signature generatd in step 3
+                publicKeyId: '@(Model.PublicKeyId)'
+            }
+        });
+    </script>
+}
+
