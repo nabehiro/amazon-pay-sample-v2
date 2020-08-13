@@ -1,3 +1,0 @@
-[submodule "amazon-pay-api-sdk-dotnet"]
-	path = amazon-pay-api-sdk-dotnet
-	url = https://github.com/nabehiro/amazon-pay-api-sdk-dotnet.git
