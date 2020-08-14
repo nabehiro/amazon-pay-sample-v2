@@ -1,8 +1,7 @@
-﻿@model FrontConfirmViewModel
+﻿@using Newtonsoft.Json
+@model FrontConfirmViewModel
 @{
     ViewData["Title"] = "Confirm";
-
-    var checkoutSessionJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented);
 }
 
 <h1>Confirm</h1>
@@ -21,7 +20,7 @@
 <hr/>
 
 <h2>CheckoutSession</h2>
-<pre>@checkoutSessionJson</pre>
+<pre>@JsonConvert.SerializeObject(Model.CheckoutSession, Newtonsoft.Json.Formatting.Indented);</pre>
 
 @section Scripts {
 <script src="https://static-fe.payments-amazon.com/checkout.js"></script>

@@ -1,0 +1,17 @@
+﻿@using Newtonsoft.Json
+@model FrontCompleteViewModel
+@{
+    ViewData["Title"] = "Complete";
+}
+
+<h1>Complete</h1>
+
+<p>Success: <code>@Model.CheckoutSession.Success</code></p>
+<p>Status: <code>@Model.CheckoutSession.Status</code></p>
+<p>StatusDetail: <code>@JsonConvert.SerializeObject(Model.CheckoutSession.StatusDetails)</code></p>
+<p>RawResponse: <code>@JsonConvert.SerializeObject(Model.CheckoutSession.RawResponse)</code></p>
+<h2>CheckoutSession</h2>
+<pre>@JsonConvert.SerializeObject(Model.CheckoutSession, Newtonsoft.Json.Formatting.Indented)</pre>
+
+
+<h1>Charge</h1>

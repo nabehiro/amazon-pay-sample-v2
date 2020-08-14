@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Threading.Tasks;
-using Amazon.Pay.API.WebStore;
-using Amazon.Pay.API.WebStore.CheckoutSession;
-using AmazonPaySample.Models;
+﻿using AmazonPaySample.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Options;
+using System;
 
 namespace AmazonPaySample.Controllers
 {
@@ -67,7 +59,7 @@ namespace AmazonPaySample.Controllers
                 checkoutResultReturnUrl: returnUrl);
 
             // OK
-            if (checkoutSession.Success && 
+            if (checkoutSession.Success &&
                 !string.IsNullOrEmpty(checkoutSession.WebCheckoutDetails.AmazonPayRedirectUrl))
             {
                 return Redirect(checkoutSession.WebCheckoutDetails.AmazonPayRedirectUrl);
@@ -84,10 +76,14 @@ namespace AmazonPaySample.Controllers
 
         public IActionResult Complete(string amazonCheckoutSessionId)
         {
-            // not impliment CompleteCheckoutSession!!
-            var result = _amazonPayHelper.CompleteCheckoutSession(amazonCheckoutSessionId, Amount);
+            var completeCheckoutSession = _amazonPayHelper.CompleteCheckoutSession(amazonCheckoutSessionId, Amount);
 
-            return View();
+            var model = new FrontCompleteViewModel
+            {
+                CheckoutSession = completeCheckoutSession,
+            };
+
+            return View(model);
         }
     }
 }

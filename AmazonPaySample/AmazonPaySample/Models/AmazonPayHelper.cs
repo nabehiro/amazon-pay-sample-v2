@@ -4,11 +4,6 @@ using Amazon.Pay.API.WebStore;
 using Amazon.Pay.API.WebStore.CheckoutSession;
 using Amazon.Pay.API.WebStore.Types;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AmazonPaySample.Models
 {
@@ -79,7 +74,10 @@ namespace AmazonPaySample.Models
         public CheckoutSessionResponse CompleteCheckoutSession(string checkoutSessionId,
             decimal amount)
         {
-            throw new NotImplementedException("WebStoreClient has no CompleteCheckoutSession method!");
+            var request = new CompleteCheckoutSessionRequest(amount, Currency.JPY);
+
+            var client = new WebStoreClient(_config);
+            return client.CompleteCheckoutSession(checkoutSessionId, request);
         }
     }
 }
