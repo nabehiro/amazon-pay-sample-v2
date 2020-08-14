@@ -30,9 +30,11 @@ namespace AmazonPaySample.Controllers
             };
 
             var returnUrl = Url.Action("Confirm", null, null, Request.Scheme);
-            model.Payload = _amazonPayHelper.CreateCheckoutSessionPayload(returnUrl);
 
-            model.Signature = _amazonPayHelper.CreateButtonSignature(model.Payload);
+            var createCheckoutSessionRequest = _amazonPayHelper.CreateCheckoutSessionRequest(returnUrl);
+
+            model.Payload = createCheckoutSessionRequest.ToJson();
+            model.Signature = _amazonPayHelper.CreateButtonSignature(createCheckoutSessionRequest);
 
             return View(model);
         }

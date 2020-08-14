@@ -32,42 +32,26 @@ namespace AmazonPaySample.Models
         }
 
         public WebStoreClient CreateWebStoreClient() => new WebStoreClient(_config);
-        
-        public string CreateButtonSignature(string payload)
-        {
-            var canonicalBuilder = new CanonicalBuilder();
-            var signatureHelper = new SignatureHelper(_config, canonicalBuilder);
-            
-            string stringToSign = signatureHelper.CreateStringToSign(payload);
 
-            return signatureHelper.GenerateSignature(stringToSign, _config.PrivateKey);
+        public string CreateButtonSignature(CreateCheckoutSessionRequest request)
+        {
+            var client = new WebStoreClient(_config);
+            return client.GenerateButtonSignature(request);
         }
 
-        public string CreateCheckoutSessionPayload(string checkoutReviewReturnUrl)
+        public CreateCheckoutSessionRequest CreateCheckoutSessionRequest(string checkoutReviewReturnUrl)
         {
-            // WARN:Following payload occured UnknownException on AmazonPay checkout page.
-            //var request = new CreateCheckoutSessionRequest
-            //(
-            //    checkoutReviewReturnUrl: checkoutReviewReturnUrl,
-            //    storeId: Options.StoreId
-            //);
+            var request = new CreateCheckoutSessionRequest
+            (
+                checkoutReviewReturnUrl: checkoutReviewReturnUrl,
+                storeId: Options.StoreId
+            );
 
-            //var addressRestrictions = request.DeliverySpecifications.AddressRestrictions;
-            //addressRestrictions.Type = RestrictionType.Allowed;
-            //addressRestrictions.Restrictions.Add("JP", new Restriction());
+            var addressRestrictions = request.DeliverySpecifications.AddressRestrictions;
+            addressRestrictions.Type = RestrictionType.Allowed;
+            addressRestrictions.Restrictions.Add("JP", new Restriction());
 
-            //return request.ToJson();
-
-            var payload = new
-            {
-                storeId = Options.StoreId,
-                webCheckoutDetails = new
-                {
-                    checkoutReviewReturnUrl
-                }
-            };
-
-            return JsonConvert.SerializeObject(payload);
+            return request;
         }
 
         public CheckoutSessionResponse GetCheckoutSession(string checkoutSessionId)
