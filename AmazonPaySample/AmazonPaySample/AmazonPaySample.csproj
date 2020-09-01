@@ -8,10 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\amazon-pay-api-sdk-dotnet\Amazon.Pay.API.SDK\Amazon.Pay.API.SDK.csproj" />
+    <PackageReference Include="Unofficial-Amazon.Pay.API.SDK" Version="2.3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
